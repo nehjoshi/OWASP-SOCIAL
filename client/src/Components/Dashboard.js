@@ -14,7 +14,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 const useStyles = makeStyles(() => ({
 
     wrapper: {
-        backgroundColor: '#f0e9e9',
+        backgroundColor: '#ebf2f5',
         height: 'fit-content'
     }
 

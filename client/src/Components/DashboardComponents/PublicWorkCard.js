@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
         padding: '5px 5px',
         border: '2px solid transparent',
         borderRadius: '10px',
-        boxShadow: '0 0 2px 2px #828282'
+        boxShadow: '0 0 7px rgba(0,0,0,0.3)'
     },
     topBar: {
         width: '100%'

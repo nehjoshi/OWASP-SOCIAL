@@ -67,6 +67,7 @@ const Home = () => {
     const RenderPosts = (posts) => {
         
         let newDynamic = [];
+        let keys=0;
         axios.get(`/user/${username}/get_pending`)
             .then(res => {
 
@@ -88,12 +89,14 @@ const Home = () => {
                         for (let j = 0; j < pendingList.length; j++) {
                             if (posts[i].post === pendingList[j].post) {
                                 console.log('matched!');
+                                continue;
                             }
                             else {
                                 console.log('Not matched');
                                 newDynamic.push(
-                                    <PublicWorkCard key={posts[i].author} handleClose={handleClose} username={posts[i].author} msg={posts[i].post} deadline={posts[i].deadline} points={posts[i].points} />
+                                    <PublicWorkCard key={keys} handleClose={handleClose} username={posts[i].author} msg={posts[i].post} deadline={posts[i].deadline} points={posts[i].points} />
                                 )
+                                keys+=1;
 
                             }
                         }
@@ -121,9 +124,6 @@ const Home = () => {
         message="Work Accepted!"
         action={
           <React.Fragment>
-            <Button color="secondary" size="small" onClick={handleClose}>
-              UNDO
-            </Button>
             <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
               <CloseIcon fontSize="small" />
             </IconButton>
