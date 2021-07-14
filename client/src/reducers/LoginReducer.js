@@ -12,7 +12,12 @@ const LoginReducer = (init = {
                 email: action.payload.email,
                 token: action.payload.token,
             }
-            default: return init
+        case 'LOGOUT':
+            return {
+                ...init,
+                token: null
+            }
+        default: return init
     }
 }
 export default LoginReducer;
