@@ -7,7 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
         background: 'white',
         height: 'fit-content',
         display: 'flex',
-        flexDirection: 'column',    
+        flexDirection: 'column',
         width: '60%',
         margin: '30px auto',
         padding: '5px 5px',
@@ -60,28 +60,34 @@ const PublicWorkCard = (props) => {
 
     const handleClickOpen = () => {
         setOpen(true);
-      };
-    
-      const handleClose = () => {
-        setOpen(false);
-      };
+    };
 
-      const handleAccept = () => {
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleAccept = () => {
         setOpen(false);
         props.handleClose();
-        const data = {post: props.msg, author: props.username, deadline: props.deadline, points: props.points};
+        const data = { post: props.msg, author: props.username, deadline: props.deadline, points: props.points };
 
         axios.post(`/user/${username}/accept_work`, data)
-        .then(res => {
-            console.log(res.data.message);
-        })
-      }
+            .then(res => {
+                console.log(res.data.message);
+            })
+    }
 
     return (
         <Grid container className={classes.wrapper}>
-            <Grid item className={classes.topBar} >
-                <Typography variant="h6" className={classes.author}>{props.username} posted: </Typography>
-            </Grid>
+            {props.username === username ?
+                <Grid item className={classes.topBar} >
+                    <Typography variant="h6" className={classes.author}>You posted: </Typography>
+                </Grid>
+                :
+                <Grid item className={classes.topBar} >
+                    <Typography variant="h6" className={classes.author}>{props.username} posted: </Typography>
+                </Grid>
+            }
             <Grid item className={classes.message}>
                 <Typography style={{ fontSize: '1.2rem' }}>{props.msg}</Typography>
             </Grid>
@@ -91,10 +97,12 @@ const PublicWorkCard = (props) => {
             <Grid item className={classes.message}>
                 <Typography style={{ fontSize: '1.2rem', color: 'green', marginTop: '7.5px', paddingBottom: '7.5px' }} >Points: {props.points}</Typography>
             </Grid>
-            <Grid item className={classes.bottomBar}>
-                <Typography className={classes.question}>Up for the task?</Typography>
-                <PanToolIcon className={classes.raiseHand} onClick={handleClickOpen}/>
-            </Grid>
+            {props.username === username ? null :
+                <Grid item className={classes.bottomBar}>
+                    <Typography className={classes.question}>Up for the task?</Typography>
+                    <PanToolIcon className={classes.raiseHand} onClick={handleClickOpen} />
+                </Grid>
+            }
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -105,15 +113,15 @@ const PublicWorkCard = (props) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         By agreeing to volunteer, you are expected to finish the work assigned within the given time frame.
-          </DialogContentText>
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         No, I'll pass
-          </Button>
+                    </Button>
                     <Button onClick={handleAccept} color="primary" autoFocus>
                         Let's Go!
-          </Button>
+                    </Button>
                 </DialogActions>
             </Dialog>
 

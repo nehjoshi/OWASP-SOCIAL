@@ -1,8 +1,9 @@
 import React from 'react';
 import { Typography, Grid, FormHelperText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 
     wrapper: {
         display: 'flex',
@@ -18,13 +19,17 @@ const useStyles = makeStyles(() => ({
     },
     text: {
         color: 'white',
-        fontFamily: 'Varela Round'
+        fontFamily: 'Varela Round',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '0.8rem'
+        }
     }
 
 }))
 
 const Footer = () => {
-    const classes = useStyles();
+    const theme = useTheme();
+    const classes = useStyles(theme);
     return (
         <section className={classes.wrapper}>
             <span className={classes.text}>OWASP VITCC | All logos have been trademarked</span>

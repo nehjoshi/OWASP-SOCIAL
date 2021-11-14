@@ -10,7 +10,7 @@ router.post('/user/:username/accept_work', async (req, res) => {
     const AnotherUser = await mongoose.model('User', UserSchema);
 
     const receiverUser = await User.findOne({ username: username });
-    const authorUser = await User.findOne({ username: author });
+    const authorUser = await AnotherUser.findOne({ username: author });
 
     const toReceiver = {
         post: post,
@@ -19,12 +19,15 @@ router.post('/user/:username/accept_work', async (req, res) => {
         points: points,
         isCompleted: false
     };
+    authorUser.workAssigned[0].acceptedBy.push({username: receiverUser.username, isCompleted: false})
     receiverUser.workPending.push(toReceiver);
     
   
 
     try {
-        const savedUser = receiverUser.save();
+        const savedAuthor = await authorUser.save();
+        const savedUser =  await receiverUser.save();
+        
         return res.send({message: 'Accepted!'});
     } catch(e){
         console.log(e);

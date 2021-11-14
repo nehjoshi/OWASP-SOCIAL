@@ -17,7 +17,7 @@ router.post('/user/:username/assign_public', async (req, res) => {
         post: post,
         deadline: deadline,
         points: points,
-        acceptedBy: {}
+        acceptedBy: []
     };
     const PostDataPublic = {
         author: username,
